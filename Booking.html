@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Booking | Calypso Computer Repair Services</title>
+        <link rel="stylesheet" href="External.css">
+    </head>
+    <body>
+        <header>
+            <img src="logo-removebg-preview.png" alt="Calypso Computer Repair Services" class="logo">
+            <h1>CALYPSO</h1>
+            <p>Computer Repair Services</p>
+            <nav>
+                <a href="Calypso-Computer-Repair-Services.html">Home</a>
+                <a href="About-Us.html">About Us</a>
+                <a href="Services.html">Services</a>
+                <a href="Booking.html" class="active">Booking</a>
+                <a href="Contact.html">Contact</a>
+            </nav>
+        </header>
+
+        <main>
+            <section id="booking">
+                <h2>Book a Repair</h2>
+
+                <form id="bookingForm">
+                    <label for="name">Full name:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="contact">Contact Number:</label>
+                    <input type="tel" id="contact" name="contact" required>
+
+                    <label for="device">Device Type:</label>
+                    <select name="device" id="device">
+                        <option>Desktop Computer</option>
+                        <option>Laptop</option>
+                        <option>Other</option>
+                    </select>
+
+                    <label for="problem">Problem or Issue:</label>
+                    <textarea name="problem" id="problem" required></textarea>
+
+                    <label for="date">Preferred Date:</label>
+                    <input type="date" id="date" name="date" required>
+
+                    <button type="submit">Submit Booking</button>
+                </form>
+
+                <div id="comments">
+                    <h3>Customer Comments</h3>
+
+                    <form id="commentForm">
+                        <label for="comment">Comment:</label>
+                        <textarea id="comment" name="comment" required></textarea>
+                        <button type="submit">Post Comment</button>
+                    </form>
+
+                    <div id="commentList">
+                        <p id="noComments">No comments yet. Be the first to leave one!</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <dialog id="messageDialog">
+            <h3 id="dialogTitle"></h3>
+            <p id="dialogText"></p>
+            <button type="button" id="dialogClose">OK</button>
+        </dialog>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>CALYPSO</h4>
+                    <p>Fast, reliable, and affordable computer repair services.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <a href="Calypso-Computer-Repair-Services.html">Home</a>
+                    <a href="About-Us.html">About Us</a>
+                    <a href="Services.html">Services</a>
+                    <a href="Booking.html">Booking</a>
+                    <a href="Contact.html">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <p>Putik, Zamboanga City</p>
+                    <p>calypsocomputer@gmail.com</p>
+                    <p>09356009122</p>
+                </div>
+            </div>
+            <p class="footer-copy">&copy; 2026 Calypso Computer Repair Services. All rights reserved.</p>
+        </footer>
+
+        <script>
+            (function () {
+                // Message dialog + booking form
+                var dialog = document.getElementById("messageDialog");
+                document.getElementById("dialogClose").addEventListener("click", function () { dialog.close(); });
+
+                var booking = document.getElementById("bookingForm");
+                booking.addEventListener("submit", function (e) {
+                    e.preventDefault();
+                    var name = document.getElementById("name").value.trim();
+                    document.getElementById("dialogTitle").textContent = "Booking Submitted";
+                    document.getElementById("dialogText").textContent =
+                        "Thank you, " + name + "! We will contact you soon to confirm your repair.";
+                    dialog.showModal();
+                    booking.reset();
+                });
+
+                // Customer comments (saved in the browser)
+                var form = document.getElementById("commentForm");
+                var list = document.getElementById("commentList");
+                var empty = document.getElementById("noComments");
+                var KEY = "calypsoComments";
+                var comments = [];
+
+                try { comments = JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) {}
+
+                function render() {
+                    list.innerHTML = "";
+                    if (comments.length === 0) { list.appendChild(empty); return; }
+                    comments.forEach(function (c) {
+                        var item = document.createElement("article");
+                        var msg = document.createElement("p");
+                        var when = document.createElement("small");
+                        msg.textContent = c.text;
+                        when.textContent = c.date;
+                        item.appendChild(msg);
+                        item.appendChild(when);
+                        list.appendChild(item);
+                    });
+                }
+
+                form.addEventListener("submit", function (e) {
+                    e.preventDefault();
+                    var text = form.comment.value.trim();
+                    if (!text) return;
+                    comments.unshift({ text: text, date: new Date().toLocaleDateString() });
+                    try { localStorage.setItem(KEY, JSON.stringify(comments)); } catch (err) {}
+                    form.reset();
+                    render();
+                });
+
+                render();
+            })();
+        </script>
+    </body>
+</html>

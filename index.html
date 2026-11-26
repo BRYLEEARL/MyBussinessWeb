@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home | Calypso Computer Repair Services</title>
+        <link rel="stylesheet" href="External.css">
+        <link rel="icon" type="image/png" href="logo-removebg-preview.png">
+    </head>
+    <body>
+        <header>
+            <button type="button" class="login-btn" id="openLogin">Login</button>
+            <img src="logo-removebg-preview.png" alt="Calypso Computer Repair Services" class="logo">
+            <h1>CALYPSO</h1>
+            <p>Computer Repair Services</p>
+            <nav>
+                <a href="Calypso-Computer-Repair-Services.html" class="active">Home</a>
+                <a href="About-Us.html">About Us</a>
+                <a href="Services.html">Services</a>
+                <a href="Booking.html">Booking</a>
+                <a href="Contact.html">Contact</a>
+            </nav>
+        </header>
+
+        <main>
+            <section id="home">
+                <h2>Computer Repair Services</h2>
+                <p>Fast, reliable, and professional computer solutions.</p>
+                <p>We repair, maintain, and upgrade computers to keep your devices working smoothly</p>
+                <a href="Booking.html">Book a repair</a>
+            </section>
+        </main>
+
+        <dialog id="loginDialog">
+            <h3>Login</h3>
+            <form id="loginForm">
+                <p>Log in if you have a membership account.</p>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" autocomplete="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" autocomplete="current-password" required>
+
+                <div class="dialog-actions">
+                    <button type="submit">Login</button>
+                    <button type="button" class="cancel-btn" id="loginCancel">Cancel</button>
+                </div>
+            </form>
+        </dialog>
+
+        <dialog id="messageDialog">
+            <h3 id="dialogTitle"></h3>
+            <p id="dialogText"></p>
+            <button type="button" id="dialogClose">OK</button>
+        </dialog>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>CALYPSO</h4>
+                    <p>Fast, reliable, and affordable computer repair services.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <a href="Calypso-Computer-Repair-Services.html">Home</a>
+                    <a href="About-Us.html">About Us</a>
+                    <a href="Services.html">Services</a>
+                    <a href="Booking.html">Booking</a>
+                    <a href="Contact.html">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <p>Putik, Zamboanga City</p>
+                    <p>calypsocomputer@gmail.com</p>
+                    <p>09356009122</p>
+                </div>
+            </div>
+            <p class="footer-copy">&copy; 2026 Calypso Computer Repair Services. All rights reserved.</p>
+        </footer>
+
+        <audio id="backgroundAudio" cla5ss="hidden-audio" autoplay loop preload="auto">
+            <source src="RiveR - Solo.mp3" type="audio/mpeg">
+        </audio>
+
+        <script>
+            (function () {
+                var audio = document.getElementById("backgroundAudio");
+                var started = false;
+                document.addEventListener("pointerdown", function () {
+                    if (!started && audio) {
+                        started = true;
+                        audio.play().catch(function () {});
+                    }
+                }, { once: true });
+
+                var msgDialog = document.getElementById("messageDialog");
+                var loginDialog = document.getElementById("loginDialog");
+                var login = document.getElementById("loginForm");
+
+                document.getElementById("dialogClose").addEventListener("click", function () { msgDialog.close(); });
+                document.getElementById("openLogin").addEventListener("click", function () { loginDialog.showModal(); });
+                document.getElementById("loginCancel").addEventListener("click", function () { loginDialog.close(); });
+
+                // Login (front-end only)
+                login.addEventListener("submit", function (e) {
+                    e.preventDefault();
+                    var user = login.username.value.trim();
+                    login.reset();
+                    loginDialog.close();
+                    document.getElementById("dialogTitle").textContent = "Login Successful";
+                    document.getElementById("dialogText").textContent = "Welcome, " + user + "!";
+                    msgDialog.showModal();
+                });
+            })();
+        </script>
+    </body>
+</html>
